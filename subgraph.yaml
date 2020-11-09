@@ -1,0 +1,25 @@
+specVersion: 0.0.2
+description: Ethereum 2.0 deposits subgraph
+repository: https://github.com/smallonotation/Eth2Deposits
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Contract
+    network: mainnet
+    source:
+      address: "0x00000000219ab540356cBB839Cbe05303d7705Fa"
+      abi: Contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - DepositEvent
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: DepositEvent(bytes,bytes,bytes,bytes,bytes)
+          handler: handleDepositEvent
+      file: ./src/mapping.ts

@@ -1,0 +1,44 @@
+type Depositor @entity {
+  "Public Key"
+  id: ID!
+  "Total Eth deposited by this depositor"
+  totalAmountDeposited: BigInt
+  "Deposits this user has triggered"
+  depositCount: BigInt
+  "List of deposits for this depositor"
+  deposits: [Deposit!] @derivedFrom(field: "depositor")
+}
+
+type Deposit @entity {
+  id: ID!
+  "Depositor"
+  depositor: Depositor
+  "User public address"
+  public_Key: Bytes!
+  "Amount"
+  amount: BigInt!
+  "Timestamp"
+  timestamp: BigInt!
+}
+
+type DepositDayData @entity{
+  id: ID!
+  "Date"
+  date: BigInt!
+  "Deposits triggered on this day"
+  dailyDeposits: BigInt!
+}
+
+type Status @entity{
+  id: ID!
+  "Genesis time of eth2.0 Phase 0"
+  genesisTime: BigInt!
+  "Validation of genesis_time (When 16384 validator deposits is reached)"
+  genesisTimeValid: Boolean!
+  "Total deposits since v1.0 release"
+  totalDeposits: BigInt!
+  "Total worth of deposits"
+  totalAmountDeposited: BigInt
+  "Total amount of depositors"
+  totalDepositors: BigInt!
+}
